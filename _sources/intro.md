@@ -1,11 +1,6 @@
-# Welcome to your Jupyter Book
+# TALENTO B 2024
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
-
-Check out the content pages bundled with this sample book to see more.
+El objetivo de este proyecto es abordar cinco puntos clave que abarcan desde la exploración y análisis exploratorio de los datos hasta la modelación de los retornos de una acción específica. A continuación se presenta un informe detallado y los resultados obtenidos para el reto propuesto.
 
 ```{tableofcontents}
 ```
