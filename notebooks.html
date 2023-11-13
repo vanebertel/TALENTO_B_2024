@@ -363,11 +363,21 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda">ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imputacion-de-datos-faltantes">Imputación de datos faltantes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-descriptivo">Análisis descriptivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-descriptivo">Análisis descriptivo:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-tendencia-y-estacionariedad">Serie de tiempo: Tendencia y estacionariedad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos">ANÁLISIS EXPLORATORIO DE LOS RETORNOS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-y-su-retorno-mensual">Serie de tiempo y su retorno mensual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-cajas">Diagrama de cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histograma">Histograma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-quantile-quantile">Q-Q (Quantile-Quantile)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficas-de-autocorrelacion">Gráficas de autocorrelación</a></li>
 </ul>
 </li>
 </ul>
@@ -397,12 +407,13 @@ document.write(`
 <span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">log</span>
 <span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span>
-<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
 <span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_predict</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 </pre></div>
 </div>
 </div>
@@ -413,7 +424,7 @@ document.write(`
 <h3>Exploración de la muestra<a class="headerlink" href="#exploracion-de-la-muestra" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/python_venv/TALENTO_B_2024/docs/stock_prices.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;C:/Users/ANGIE VANESA/TRABAJOS/PROYECTOS/TALENTO_B_2024/docs/stock_prices.csv&quot;</span><span class="p">)</span>
 <span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -576,9 +587,8 @@ document.write(`
 </table>
 </div></div></div>
 </div>
-</section>
 <section id="verificacion-de-datos-faltantes">
-<h3>Verificación de datos faltantes<a class="headerlink" href="#verificacion-de-datos-faltantes" title="Permalink to this heading">#</a></h3>
+<h4>Verificación de datos faltantes<a class="headerlink" href="#verificacion-de-datos-faltantes" title="Permalink to this heading">#</a></h4>
 <p>Se procede a realizar la verificación de datos faltantes en la muestra:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -702,11 +712,64 @@ dtype: int64
 </div></div></div>
 </div>
 </section>
+</section>
 <section id="imputacion-de-datos-faltantes">
 <h3>Imputación de datos faltantes<a class="headerlink" href="#imputacion-de-datos-faltantes" title="Permalink to this heading">#</a></h3>
+<p>El éxito al modelar eficazmente está fuertemente influenciado por lo buena que sea la información de origen, así como por su accesibilidad, asegurándose además de que sea completa. A continuación se aplicaran técnicas para la imputación de datos faltantes en las series de tiempo de <strong>Stock2</strong> y <strong>stock1</strong></p>
+<p>El objetivo de la imputación es rellenar los valores perdidos con estimaciones (realizadas con el método de aprendizaje más apropiado para cada caso) de estos teniendo en cuenta las relaciones posibles entre las observaciones.existen diversos métodos de imputación diferenciados en la forma de estimar los datos faltantes, cuya elección preferible vendrá dada por la naturaleza de la serie:</p>
+<ul class="simple">
+<li><p><strong>Imputación mediante la media</strong>: se reemplazan los valores perdidos por la media de los valores observados.</p></li>
+<li><p><strong>Imputación mediante regresión</strong>: se estima una regresión de las observaciones existentes y se imputa cada valor perdido mediante la ecuación de regresión estimada.</p></li>
+<li><p><strong>Imputación mediante regresión estocástica</strong>: similar al anterior pero se imputa añadiendo a la predicción un valor residual para reestablecer la pérdida de variabilidad.</p></li>
+<li><p><strong>Imputación mediante médias móviles</strong>: se reemplazan las observaciones faltantes por los valores estimados mediante médias móviles.</p></li>
+<li><p><strong>Imputación por Last Observation Carried Forward (locf)</strong>: reemplaza el dato perdido por la observacion que le precede.</p></li>
+</ul>
+<p>Pero además de los métodos simples, también hay posibilidades adicionales más complejas para la imputación en series temporales univariantes:</p>
+<ul class="simple">
+<li><p><strong>Algoritmos multivariantes con datos retardados</strong>: consisten en emplear indirectamente los algoritmos de series multivariantes en series univariantes empleando el tiempo (variable implícita de una serie temporal) como un atributo más. La forma habitual de hacer esto es mediante lags (variables que toman el valor de otra variable en un instante de tiempo previo) y leads (toman el valor de otra variable en un instante de tiempo posterior).</p></li>
+<li><p><strong>Filtro de Kalman con modelos ARIMA de espacio de estados</strong>: todos los modelos ARIMA pueden ser reescritos (y estimados) como modelos en el espacio de estados. Estos modelos en el espacio de estados pueden entre otras muchas cosas estimar observaciones perdidas. Luego los principales beneficios de representar sistemas dinámicos en forma de espacio de estados es que el espacio de estados permite que las variables no observadas puedan ser incorporadas y estimadas junto con el modelo observable, y que además, estos modelos en el espacio de estados pueden ser analizados usando un algoritmo recursivo llamado filtro de Kalman (Kalman filter), que es usado, entre otras cosas, para determinar las estimaciones óptimas de los modelos en el espacio de estados.</p></li>
+</ul>
+<p>Para el caso de la serie temporal <strong>stock1</strong>  y <strong>stock2</strong> se decidió aplicar un modelo de predicción de series de tiempo para pronosticar el valor faltante usando sus valores pasados.</p>
+<ul class="simple">
+<li><p>Interpolación:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">missing_data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Date      0
+Stock1    0
+Stock2    0
+Stock3    0
+Stock4    0
+Stock5    0
+Stock6    0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="analisis-descriptivo">
-<h3>Análisis descriptivo<a class="headerlink" href="#analisis-descriptivo" title="Permalink to this heading">#</a></h3>
+<h3>Análisis descriptivo:<a class="headerlink" href="#analisis-descriptivo" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
@@ -745,24 +808,24 @@ dtype: int64
   <tbody>
     <tr>
       <th>Stock1</th>
-      <td>285.0</td>
-      <td>119.021446</td>
-      <td>6.330956</td>
+      <td>286.0</td>
+      <td>118.993464</td>
+      <td>6.337532</td>
       <td>107.912490</td>
-      <td>113.685175</td>
-      <td>119.361852</td>
-      <td>123.804605</td>
+      <td>113.614764</td>
+      <td>119.350920</td>
+      <td>123.786876</td>
       <td>130.289727</td>
     </tr>
     <tr>
       <th>Stock2</th>
-      <td>285.0</td>
-      <td>143.091340</td>
-      <td>11.699775</td>
+      <td>286.0</td>
+      <td>143.074648</td>
+      <td>11.682642</td>
       <td>117.011712</td>
-      <td>134.412267</td>
-      <td>141.251579</td>
-      <td>153.666690</td>
+      <td>134.451789</td>
+      <td>141.211706</td>
+      <td>153.660505</td>
       <td>169.938853</td>
     </tr>
     <tr>
@@ -803,9 +866,9 @@ dtype: int64
 </div></div></div>
 </div>
 <ul class="simple">
-<li><p><strong>stock1</strong> : Esta acción cuenta con un precio promedio de 119.02 aproximadamente, con una desviación estandar de 6.330. hay 285 registros y un dato faltante. el 50% de los precios registrados para esta acción están por encima de 119.36</p></li>
-<li><p><strong>stock2</strong> : Esta acción cuenta con un precio promedio de 143.091 con una desviación estándar de 11.699. desde el 2000 hasta el 2023 se han encontrado registros de precios mínimo de 117.01 y máximo 169.93.</p></li>
-<li><p><strong>stocks 3, 4 y 5</strong> :  No se encontraron registros faltantes. Las tres acciones cuentan con registros de precios máximo sobre los 200, siendo el stock5 auqella con el mayor valor alcanzado, de 386.00. En general, el stock5 tiene el precio promedio más alto, aproximadamente de 232.46 con una desviación estándar de 61.28.</p></li>
+<li><p><strong>stock1</strong> : Esta acción cuenta con un precio promedio de 118.99 aproximadamente, con una desviación estandar de 6.33. Hay 286 registros. el 50% de los precios registrados para esta acción están por encima de 119.35</p></li>
+<li><p><strong>stock2</strong> : Esta acción cuenta con un precio promedio de 143.07 con una desviación estándar de 11.68. desde el 2000 hasta el 2023 se han encontrado registros de precios mínimo de 117.01 y máximo 169.93.</p></li>
+<li><p><strong>stocks 3, 4 y 5</strong> :Las tres acciones cuentan con registros de precios máximo sobre los 200, siendo el stock5 aquella con el mayor valor alcanzado, de 386.00. En general, el stock5 tiene el precio promedio más alto, aproximadamente de 232.46 con una desviación estándar de 61.28.</p></li>
 </ul>
 </section>
 <section id="serie-de-tiempo-tendencia-y-estacionariedad">
@@ -840,7 +903,7 @@ dtype: int64
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prueba</span><span class="p">(</span><span class="n">stock</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">prueba_ADF</span><span class="p">(</span><span class="n">stock</span><span class="p">):</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">stock</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ADF Statistic: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p-value: </span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
@@ -850,7 +913,33 @@ dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock3&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -1.795419
+p-value: 0.382739
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -1.697034
+p-value: 0.432641
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock3&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -863,7 +952,7 @@ p-value: 0.987025
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock4&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock4&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -876,7 +965,7 @@ p-value: 0.967097
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock5&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock5&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -890,6 +979,461 @@ p-value: 0.835545
 <p>Dado que el p-valor es mayor que el nivel de significancia (0.05), no se rechaza la hipótesis nula. Las series de tiempo son no estacionaria.</p>
 </section>
 </section>
+<section id="analisis-exploratorio-de-los-retornos">
+<h2>ANÁLISIS EXPLORATORIO DE LOS RETORNOS<a class="headerlink" href="#analisis-exploratorio-de-los-retornos" title="Permalink to this heading">#</a></h2>
+<p>Los retornos de acciones proporcionan una medida cuantitativa del rendimiento de una inversión. Al analizar los retornos, los inversores pueden evaluar el éxito o fracaso de sus decisiones de inversión y comparar el rendimiento de diferentes activos. El análisis de retornos puede guiar las decisiones sobre cuándo comprar, vender o retener acciones. A continuación, se determinan y analizan los retornos de las acciones registradas en la muestra:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock4&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock5&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retorno</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">,</span><span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">,</span><span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">,</span><span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]])</span>
+<span class="n">retorno</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock1</th>
+      <th>Retornos_stock2</th>
+      <th>Retornos_stock3</th>
+      <th>Retornos_stock4</th>
+      <th>Retornos_stock5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.007150</td>
+      <td>-0.028250</td>
+      <td>0.026322</td>
+      <td>-0.001252</td>
+      <td>0.094224</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.021670</td>
+      <td>-0.006841</td>
+      <td>-0.012107</td>
+      <td>0.039465</td>
+      <td>-0.022095</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.010642</td>
+      <td>0.019975</td>
+      <td>0.007983</td>
+      <td>-0.004533</td>
+      <td>0.067242</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.003439</td>
+      <td>0.012455</td>
+      <td>-0.030124</td>
+      <td>-0.016282</td>
+      <td>-0.026456</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retorno</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Retornos_stock1</th>
+      <td>286.0</td>
+      <td>0.000379</td>
+      <td>0.009804</td>
+      <td>-0.027079</td>
+      <td>-0.005597</td>
+      <td>0.000141</td>
+      <td>0.006099</td>
+      <td>0.034287</td>
+    </tr>
+    <tr>
+      <th>Retornos_stock2</th>
+      <td>286.0</td>
+      <td>0.000418</td>
+      <td>0.020214</td>
+      <td>-0.057079</td>
+      <td>-0.013139</td>
+      <td>0.001382</td>
+      <td>0.013828</td>
+      <td>0.055437</td>
+    </tr>
+    <tr>
+      <th>Retornos_stock3</th>
+      <td>286.0</td>
+      <td>0.005767</td>
+      <td>0.100157</td>
+      <td>-0.587123</td>
+      <td>-0.010917</td>
+      <td>0.001262</td>
+      <td>0.015530</td>
+      <td>1.554491</td>
+    </tr>
+    <tr>
+      <th>Retornos_stock4</th>
+      <td>286.0</td>
+      <td>0.002864</td>
+      <td>0.028169</td>
+      <td>-0.080568</td>
+      <td>-0.014163</td>
+      <td>0.002202</td>
+      <td>0.020398</td>
+      <td>0.083190</td>
+    </tr>
+    <tr>
+      <th>Retornos_stock5</th>
+      <td>286.0</td>
+      <td>0.004551</td>
+      <td>0.032010</td>
+      <td>-0.085563</td>
+      <td>-0.019447</td>
+      <td>0.005958</td>
+      <td>0.025240</td>
+      <td>0.094224</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="serie-de-tiempo-y-su-retorno-mensual">
+<h3>Serie de tiempo y su retorno mensual<a class="headerlink" href="#serie-de-tiempo-y-su-retorno-mensual" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stock1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio de la Acción&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># Gráfico para Retornos_Stock1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Retornos_Stock1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retornos&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9d1f19aba4ce4c75b8c6f9be23b6e0f50534f64df6c16504bfa8534cb5900642.png" src="_images/9d1f19aba4ce4c75b8c6f9be23b6e0f50534f64df6c16504bfa8534cb5900642.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stock2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio de la Acción&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># Gráfico para Retornos_Stock2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Retornos_Stock2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retornos&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3940e996618e988d842fdef7a2bc24146cb1c29d4002c6d7a2606a1ff9012fdc.png" src="_images/3940e996618e988d842fdef7a2bc24146cb1c29d4002c6d7a2606a1ff9012fdc.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 3</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock3&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stock3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio de la Acción&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># Gráfico para Retornos_Stock2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Retornos_Stock3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retornos&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8c21c03294bb18788a6c6fcaccd8e91258a80d414c553b537db2a514368c3751.png" src="_images/8c21c03294bb18788a6c6fcaccd8e91258a80d414c553b537db2a514368c3751.png" />
+</div>
+</div>
+<p>De gráfico anterior, vemos que la serie de tiempo para el Stock3 no es estacionaria, muestra cierta tendencia, pero también, hay un registro que podría ser un posible dato atípico, el cual se analizará en la siguiente sección.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 4</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock4&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stock4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio de la Acción&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># Gráfico para Retornos_Stock2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Retornos_Stock4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retornos&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5bd50adfcfd1a3cab08f5f5d0989f2a9587139fce6b78ce38394550ee57695d3.png" src="_images/5bd50adfcfd1a3cab08f5f5d0989f2a9587139fce6b78ce38394550ee57695d3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 5</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock5&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stock5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Precio de la Acción&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="c1"># Gráfico para Retornos_Stock2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Retornos_Stock5&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Retornos&#39;</span><span class="p">)</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]),</span> <span class="n">n</span><span class="p">),</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">][::</span><span class="n">n</span><span class="p">])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/337af030a275654c72bd9a3354983bcbef1a55e9bb5b8f23e368be6abde76d7a.png" src="_images/337af030a275654c72bd9a3354983bcbef1a55e9bb5b8f23e368be6abde76d7a.png" />
+</div>
+</div>
+<p>Podemos ver que los precios de la acción no son una serie de tiempo estacionaria, puesto que tienen tendencia y varianza variables a lo largo del tiempo. La serie de tiempo de retornos, por otra parte, parece tener medias y varianza más estables a través del tiempo, por lo que sería más factible predecir su movimiento futuro.</p>
+</section>
+<section id="diagrama-de-cajas">
+<h3>Diagrama de cajas<a class="headerlink" href="#diagrama-de-cajas" title="Permalink to this heading">#</a></h3>
+<p>El siguiente diagrama de cajas muestra que hay posibles datos atípicos en los retornos de las acciones, tanto positivos como negativos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">columns_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">columns_to_plot</span><span class="p">):</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">retorno</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set2&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;h&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ANGIE VANESA\AppData\Local\Temp\ipykernel_20572\3823710997.py:4: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=retorno[column], palette=&quot;Set2&quot;, ax=axs[i], orient=&#39;h&#39;)
+C:\Users\ANGIE VANESA\AppData\Local\Temp\ipykernel_20572\3823710997.py:4: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=retorno[column], palette=&quot;Set2&quot;, ax=axs[i], orient=&#39;h&#39;)
+C:\Users\ANGIE VANESA\AppData\Local\Temp\ipykernel_20572\3823710997.py:4: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=retorno[column], palette=&quot;Set2&quot;, ax=axs[i], orient=&#39;h&#39;)
+C:\Users\ANGIE VANESA\AppData\Local\Temp\ipykernel_20572\3823710997.py:4: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=retorno[column], palette=&quot;Set2&quot;, ax=axs[i], orient=&#39;h&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\ANGIE VANESA\AppData\Local\Temp\ipykernel_20572\3823710997.py:4: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.boxplot(data=retorno[column], palette=&quot;Set2&quot;, ax=axs[i], orient=&#39;h&#39;)
+</pre></div>
+</div>
+<img alt="_images/098adfa47c348b827844ba077ec80dbd275b3178af62a4d9e278e34883867a9e.png" src="_images/098adfa47c348b827844ba077ec80dbd275b3178af62a4d9e278e34883867a9e.png" />
+</div>
+</div>
+<p>El siguiente gráfico corresponde a un histograma de los retornos de las acciones, los cuales nos muestran que:</p>
+<ul class="simple">
+<li><p>El registro de retorno más alto en todas las acciones tuvo poca frecuencia.</p></li>
+</ul>
+</section>
+<section id="histograma">
+<h3>Histograma<a class="headerlink" href="#histograma" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+<span class="n">columns_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">columns_to_plot</span><span class="p">):</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">retorno</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;forestgreen&#39;</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dc79759d5495d32c7a07c478c80e8aac99e69af6deb96a624d67fe5ad5d2b0b3.png" src="_images/dc79759d5495d32c7a07c478c80e8aac99e69af6deb96a624d67fe5ad5d2b0b3.png" />
+</div>
+</div>
+</section>
+<section id="q-q-quantile-quantile">
+<h3>Q-Q (Quantile-Quantile)<a class="headerlink" href="#q-q-quantile-quantile" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">14</span><span class="p">))</span>
+<span class="n">columns_to_plot</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Retornos_stock1&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock2&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock3&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock4&#39;</span><span class="p">,</span> <span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">columns_to_plot</span><span class="p">):</span>
+    <span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">retorno</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;q&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Gráfico QQ de </span><span class="si">{</span><span class="n">column</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6f260acdca97f51414f1d65d73fc998f3894f4ac0ee068683b50fc504022227e.png" src="_images/6f260acdca97f51414f1d65d73fc998f3894f4ac0ee068683b50fc504022227e.png" />
+</div>
+</div>
+</section>
+<section id="graficas-de-autocorrelacion">
+<h3>Gráficas de autocorrelación<a class="headerlink" href="#graficas-de-autocorrelacion" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -901,16 +1445,16 @@ p-value: 0.835545
         },
         codeMirrorConfig: {
             theme: "abcdef",
-            mode: "python"
+            mode: "psqlpy_venv"
         },
         kernelOptions: {
-            name: "python3",
+            name: "psqlpy_venv",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'psqlpy_venv'</script>
 
                 </article>
               
@@ -947,11 +1491,21 @@ p-value: 0.835545
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda">ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#imputacion-de-datos-faltantes">Imputación de datos faltantes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-descriptivo">Análisis descriptivo</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-descriptivo">Análisis descriptivo:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-tendencia-y-estacionariedad">Serie de tiempo: Tendencia y estacionariedad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos">ANÁLISIS EXPLORATORIO DE LOS RETORNOS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-y-su-retorno-mensual">Serie de tiempo y su retorno mensual</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-cajas">Diagrama de cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histograma">Histograma</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#q-q-quantile-quantile">Q-Q (Quantile-Quantile)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graficas-de-autocorrelacion">Gráficas de autocorrelación</a></li>
 </ul>
 </li>
 </ul>
