@@ -1041,52 +1041,32 @@ p-value: 0.382739
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -1.697034
-p-value: 0.432641
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock3&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: 0.576606
-p-value: 0.987025
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock3&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock4&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: 0.115406
-p-value: 0.967097
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock4&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock5&quot;</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -0.742085
-p-value: 0.835545
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock5&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1353,7 +1333,8 @@ p-value: 0.794826
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 2</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="c1"># Acción 2</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
@@ -1381,13 +1362,11 @@ p-value: 0.794826
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/93eaac4fdc6e7afad7f8b90ed259c877be976863138170259bab4a14ebd12b7f.png" src="_images/93eaac4fdc6e7afad7f8b90ed259c877be976863138170259bab4a14ebd12b7f.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 3</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="c1"># Acción 3</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock3&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
@@ -1415,14 +1394,12 @@ p-value: 0.794826
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/7dc2637104fc0a6152c805543ef4f8d30e2f68f6708e4c43e7e136867c60e120.png" src="_images/7dc2637104fc0a6152c805543ef4f8d30e2f68f6708e4c43e7e136867c60e120.png" />
-</div>
 </div>
 <p>De gráfico anterior, vemos que la serie de tiempo para el Stock3 no es estacionaria, muestra cierta tendencia, pero también, hay un registro que podría ser un posible dato atípico, el cual se analizará en la siguiente sección.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 4</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="c1"># Acción 4</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock4&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
@@ -1450,13 +1427,11 @@ p-value: 0.794826
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/cd0901f1269f1d840a0b76a9c7447f90802a19c6d3c01a7138a85c4a8c7259c0.png" src="_images/cd0901f1269f1d840a0b76a9c7447f90802a19c6d3c01a7138a85c4a8c7259c0.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 5</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="c1"># Acción 5</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock5&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
@@ -1484,13 +1459,11 @@ p-value: 0.794826
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<img alt="_images/22c31b571c0688ed6b78caa466270f69928382a748354ac6c908ef44e0802801.png" src="_images/22c31b571c0688ed6b78caa466270f69928382a748354ac6c908ef44e0802801.png" />
-</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acción 1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
+<span class="c1"># Acción 6</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock6&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;olive&#39;</span><span class="p">)</span>
@@ -1517,9 +1490,6 @@ p-value: 0.794826
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/a22e175b46574982ffa4b3ad545336174f748ea6f3bff3d0e2f857aebfd7b2bc.png" src="_images/a22e175b46574982ffa4b3ad545336174f748ea6f3bff3d0e2f857aebfd7b2bc.png" />
 </div>
 </div>
 <p>Podemos ver que los precios de la acción no son una serie de tiempo estacionaria, puesto que tienen tendencia y varianza variables a lo largo del tiempo. La serie de tiempo de retornos, por otra parte, parece tener medias y varianza más estables a través del tiempo, por lo que sería más factible predecir su movimiento futuro.</p>
@@ -1643,89 +1613,6 @@ p-value: 0.794826
 </section>
 <section id="correlaciones-dinamicas-stock5-y-stock6">
 <h3>Correlaciones dinámicas: Stock5 y Stock6<a class="headerlink" href="#correlaciones-dinamicas-stock5-y-stock6" title="Permalink to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retorno</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Retornos_stock1</th>
-      <th>Retornos_stock2</th>
-      <th>Retornos_stock3</th>
-      <th>Retornos_stock4</th>
-      <th>Retornos_stock5</th>
-      <th>Retornos_stock6</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>-0.007175</td>
-      <td>-0.028656</td>
-      <td>0.025982</td>
-      <td>-0.001253</td>
-      <td>0.090046</td>
-      <td>-0.015625</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>0.021439</td>
-      <td>-0.006864</td>
-      <td>-0.012181</td>
-      <td>0.038707</td>
-      <td>-0.022342</td>
-      <td>-0.021636</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>0.010586</td>
-      <td>0.019778</td>
-      <td>0.007951</td>
-      <td>-0.004543</td>
-      <td>0.065078</td>
-      <td>-0.056952</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>0.003433</td>
-      <td>0.012378</td>
-      <td>-0.030587</td>
-      <td>-0.016416</td>
-      <td>-0.026812</td>
-      <td>-0.027030</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">horizonte</span> <span class="o">=</span> <span class="mi">7</span>
