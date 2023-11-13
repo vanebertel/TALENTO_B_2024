@@ -63,6 +63,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -168,7 +170,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">SERIES DE TIEMPO</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>SERIES DE TIEMPO</strong></a></li>
 </ul>
 
     </div>
@@ -362,7 +364,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda">ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda"><strong>ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
 </ul>
@@ -372,7 +374,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-tendencia-y-estacionariedad">Serie de tiempo: Tendencia y estacionariedad</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos">ANÁLISIS EXPLORATORIO DE LOS RETORNOS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos"><strong>ANÁLISIS EXPLORATORIO DE LOS RETORNOS</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-y-su-retorno-mensual-compuesto">Serie de tiempo y su retorno mensual compuesto</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-cajas">Diagrama de cajas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histograma">Histograma</a></li>
@@ -385,8 +387,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlaciones-dinamicas-stock5-y-stock6">Correlaciones dinámicas: Stock5 y Stock6</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision">DECISIÓN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelamiento">MODELAMIENTO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision"><strong>DECISIÓN</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelamiento"><strong>MODELAMIENTO</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-ridge"><strong>Regresión Ridge</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion">Implementación</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -399,7 +405,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="series-de-tiempo">
-<h1>SERIES DE TIEMPO<a class="headerlink" href="#series-de-tiempo" title="Permalink to this heading">#</a></h1>
+<h1><strong>SERIES DE TIEMPO</strong><a class="headerlink" href="#series-de-tiempo" title="Permalink to this heading">#</a></h1>
 <ul class="simple">
 <li><p>Importamos librerías necesarias:</p></li>
 </ul>
@@ -417,19 +423,42 @@ document.write(`
 <span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_predict</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_log_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 <span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
-
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Ridge</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;seaborn&quot;</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ParameterGrid</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">26</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;seaborn&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">ParameterGrid</span>
+<span class="ne">---&gt; </span><span class="mi">26</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">compat</span><span class="o">.</span><span class="n">v1</span><span class="o">.</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">28</span> <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;tf&#39; is not defined
 </pre></div>
 </div>
 </div>
 </div>
 <section id="analisis-exploratorio-de-los-datos-eda">
-<h2>ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)<a class="headerlink" href="#analisis-exploratorio-de-los-datos-eda" title="Permalink to this heading">#</a></h2>
+<h2><strong>ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</strong><a class="headerlink" href="#analisis-exploratorio-de-los-datos-eda" title="Permalink to this heading">#</a></h2>
 <section id="exploracion-de-la-muestra">
 <h3>Exploración de la muestra<a class="headerlink" href="#exploracion-de-la-muestra" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -1029,21 +1058,12 @@ dtype: int64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock1&#39;</span><span class="p">])</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-    <span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
-    <span class="o">^</span>
-<span class="ne">SyntaxError</span>: invalid syntax
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ADF Statistic: -1.795419
+p-value: 0.382739
 </pre></div>
 </div>
 </div>
@@ -1051,12 +1071,6 @@ dtype: int64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Stock2&#39;</span><span class="p">])</span>
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1070,13 +1084,6 @@ p-value: 0.432641
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock3&quot;</span><span class="p">])</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1090,13 +1097,6 @@ p-value: 0.987025
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock4&quot;</span><span class="p">])</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1110,13 +1110,6 @@ p-value: 0.967097
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock5&quot;</span><span class="p">])</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1130,13 +1123,6 @@ p-value: 0.835545
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prueba_ADF</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;Stock6&quot;</span><span class="p">])</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1151,7 +1137,7 @@ p-value: 0.794826
 </section>
 </section>
 <section id="analisis-exploratorio-de-los-retornos">
-<h2>ANÁLISIS EXPLORATORIO DE LOS RETORNOS<a class="headerlink" href="#analisis-exploratorio-de-los-retornos" title="Permalink to this heading">#</a></h2>
+<h2><strong>ANÁLISIS EXPLORATORIO DE LOS RETORNOS</strong><a class="headerlink" href="#analisis-exploratorio-de-los-retornos" title="Permalink to this heading">#</a></h2>
 <p>Los retornos de acciones proporcionan una medida cuantitativa del rendimiento de una inversión. Al analizar los retornos, los inversores pueden evaluar el éxito o fracaso de sus decisiones de inversión y comparar el rendimiento de diferentes activos. El análisis de retornos puede guiar las decisiones sobre cuándo comprar, vender o retener acciones. A continuación, se determinan y analizan los retornos de las acciones registradas en la muestra:</p>
 <ul class="simple">
 <li><p>Retorno compuesto o logarítimo:</p></li>
@@ -1421,13 +1407,6 @@ p-value: 0.794826
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1462,13 +1441,6 @@ p-value: 0.794826
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1504,13 +1476,6 @@ p-value: 0.794826
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1545,13 +1510,6 @@ p-value: 0.794826
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1586,13 +1544,6 @@ p-value: 0.794826
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="o">%%html</span>
-<span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
-<span class="w">    </span><span class="p">.</span><span class="nc">input</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -1741,12 +1692,593 @@ p-value: 0.794826
 </section>
 </section>
 <section id="decision">
-<h2>DECISIÓN<a class="headerlink" href="#decision" title="Permalink to this heading">#</a></h2>
+<h2><strong>DECISIÓN</strong><a class="headerlink" href="#decision" title="Permalink to this heading">#</a></h2>
 <p>¿Si tuvieras que elegir en que acción invertir, ¿cuál elegirías? Evalúa tanto los potenciales retornos, como los riesgos asociados ?</p>
 </section>
 <section id="modelamiento">
-<h2>MODELAMIENTO<a class="headerlink" href="#modelamiento" title="Permalink to this heading">#</a></h2>
+<h2><strong>MODELAMIENTO</strong><a class="headerlink" href="#modelamiento" title="Permalink to this heading">#</a></h2>
 <p>Modela los retornos de la acción 5 con base en los retornos de las demás acciones.</p>
+</section>
+<section id="regresion-ridge">
+<h2><strong>Regresión Ridge</strong>:<a class="headerlink" href="#regresion-ridge" title="Permalink to this heading">#</a></h2>
+<p>En la regresión ridge, los coeficientes <span class="math notranslate nohighlight">\(\beta\)</span> se eligen no sólo para que predigan bien en los datos de entrenamiento, sino que también, para que se ajusten a una restricción adicional. La regresión Ridge regulariza la regresión lineal imponiendo una penalización al tamaño de los coeficientes.</p>
+<p>La magnitud de los coeficientes se considera lo más pequeña posible; en otras palabras, todas las entradas de deben ser cercanas a cero. Intuitivamente, esto significa que cada característica debe tener el menor efecto posible sobre el resultado (lo que se traduce en tener una pendiente pequeña), sin dejar de predecir bien. Esta restricción es un ejemplo de lo que se llama regularización. La regularización consiste en restringir explícitamente un modelo para evitar el overfitting. El tipo particular utilizado por la regresión ridge se conoce como regularización  <span class="math notranslate nohighlight">\(L^2\)</span></p>
+<section id="implementacion">
+<h3>Implementación<a class="headerlink" href="#implementacion" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Preparación de los datos:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">retorno</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock1</th>
+      <th>Retornos_stock2</th>
+      <th>Retornos_stock3</th>
+      <th>Retornos_stock4</th>
+      <th>Retornos_stock5</th>
+      <th>Retornos_stock6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.007175</td>
+      <td>-0.028656</td>
+      <td>0.025982</td>
+      <td>-0.001253</td>
+      <td>0.090046</td>
+      <td>-0.015625</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.021439</td>
+      <td>-0.006864</td>
+      <td>-0.012181</td>
+      <td>0.038707</td>
+      <td>-0.022342</td>
+      <td>-0.021636</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.010586</td>
+      <td>0.019778</td>
+      <td>0.007951</td>
+      <td>-0.004543</td>
+      <td>0.065078</td>
+      <td>-0.056952</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.003433</td>
+      <td>0.012378</td>
+      <td>-0.030587</td>
+      <td>-0.016416</td>
+      <td>-0.026812</td>
+      <td>-0.027030</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Formaremos los respectivos conjuntos de entrenamiento, validación y testeo:</p>
+<ul class="simple">
+<li><p>Variables predictoras:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="o">=</span><span class="n">retorno</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock1</th>
+      <th>Retornos_stock2</th>
+      <th>Retornos_stock3</th>
+      <th>Retornos_stock4</th>
+      <th>Retornos_stock6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.007175</td>
+      <td>-0.028656</td>
+      <td>0.025982</td>
+      <td>-0.001253</td>
+      <td>-0.015625</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.021439</td>
+      <td>-0.006864</td>
+      <td>-0.012181</td>
+      <td>0.038707</td>
+      <td>-0.021636</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.010586</td>
+      <td>0.019778</td>
+      <td>0.007951</td>
+      <td>-0.004543</td>
+      <td>-0.056952</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.003433</td>
+      <td>0.012378</td>
+      <td>-0.030587</td>
+      <td>-0.016416</td>
+      <td>-0.027030</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>Variable respuesta:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">=</span><span class="n">retorno</span><span class="p">[[</span><span class="s1">&#39;Retornos_stock5&#39;</span><span class="p">]]</span>
+<span class="n">y</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.090046</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.022342</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.065078</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.026812</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tamaño</span><span class="o">=</span><span class="mi">7</span>
+<span class="n">x_train</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">x_test</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">y_train</span><span class="o">=</span><span class="p">[]</span>
+<span class="n">y_test</span><span class="o">=</span><span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">280</span><span class="p">,</span> <span class="n">tamaño</span><span class="p">):</span>
+    <span class="n">xtrain</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="n">tamaño</span><span class="p">]</span>
+    <span class="n">ytrain</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="n">tamaño</span><span class="p">]</span>
+    
+    <span class="c1"># Añadir a x_train y y_train</span>
+    <span class="n">x_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xtrain</span><span class="p">)</span>
+    <span class="n">y_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ytrain</span><span class="p">)</span>
+    
+    <span class="n">xtest</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">tamaño</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tamaño</span><span class="p">]</span>
+    <span class="n">ytest</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">tamaño</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">tamaño</span><span class="p">]</span>
+    <span class="n">x_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xtest</span><span class="p">)</span>
+    <span class="n">y_test</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ytest</span><span class="p">)</span>
+   
+</pre></div>
+</div>
+</div>
+</div>
+<p>Realizamos la partición de los datos para X_train , X_test, Y_train, Y_test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params_alpha</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">grid_search_Ridge</span><span class="p">(</span><span class="n">params_alpha</span><span class="p">):</span>
+    <span class="n">best_alpha</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">best_rmse</span> <span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params_alpha</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]:</span>
+        <span class="n">rmse</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">ridge</span><span class="o">=</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_train</span><span class="p">)):</span>
+            <span class="n">ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span>
+            <span class="n">y_pred</span> <span class="o">=</span> <span class="n">ridge</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">[</span><span class="n">ix</span><span class="p">])</span>
+            <span class="n">error</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">[</span><span class="n">ix</span><span class="p">],</span><span class="n">y_pred</span><span class="p">))</span>
+            <span class="n">rmse</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">avg_rmse</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rmse</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">avg_rmse</span> <span class="o">&lt;</span> <span class="n">best_rmse</span><span class="p">:</span>
+            <span class="n">best_rmse</span><span class="o">=</span><span class="n">avg_rmse</span>
+            <span class="n">best_alpha</span><span class="o">=</span><span class="n">p</span>
+    <span class="k">return</span> <span class="n">best_alpha</span><span class="p">,</span> <span class="n">best_rmse</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_search_Ridge</span><span class="p">(</span><span class="n">params_alpha</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1, 0.0305195040777465)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Partimos nuevamente la base de datos y formamos un set de entrenamiento y uno de testeo. El set de entrenamiento se usará con cada uno de los mejores modelos obtenidos, una vez entrenados se hará la rpedicción de las últimas 24 observaciones y se calculará el <span class="math notranslate nohighlight">\(R^2\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XTRAIN</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">279</span><span class="p">]</span>
+<span class="n">XTRAIN</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock1</th>
+      <th>Retornos_stock2</th>
+      <th>Retornos_stock3</th>
+      <th>Retornos_stock4</th>
+      <th>Retornos_stock6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>274</th>
+      <td>0.005882</td>
+      <td>0.015517</td>
+      <td>0.023831</td>
+      <td>0.010698</td>
+      <td>-0.002800</td>
+    </tr>
+    <tr>
+      <th>275</th>
+      <td>0.000208</td>
+      <td>-0.005935</td>
+      <td>-0.008600</td>
+      <td>0.041123</td>
+      <td>-0.088635</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>0.008796</td>
+      <td>-0.001970</td>
+      <td>-0.002271</td>
+      <td>0.020581</td>
+      <td>-0.014398</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>-0.001563</td>
+      <td>0.011700</td>
+      <td>0.000094</td>
+      <td>0.017438</td>
+      <td>-0.041126</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>-0.005284</td>
+      <td>0.034041</td>
+      <td>0.041745</td>
+      <td>-0.003544</td>
+      <td>-0.058566</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YTRAIN</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">279</span><span class="p">]</span>
+<span class="n">YTRAIN</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>274</th>
+      <td>-0.003532</td>
+    </tr>
+    <tr>
+      <th>275</th>
+      <td>0.003502</td>
+    </tr>
+    <tr>
+      <th>276</th>
+      <td>0.031514</td>
+    </tr>
+    <tr>
+      <th>277</th>
+      <td>0.012478</td>
+    </tr>
+    <tr>
+      <th>278</th>
+      <td>0.007517</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">XTEST</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">:]</span>
+<span class="n">XTEST</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock1</th>
+      <th>Retornos_stock2</th>
+      <th>Retornos_stock3</th>
+      <th>Retornos_stock4</th>
+      <th>Retornos_stock6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>281</th>
+      <td>-0.005700</td>
+      <td>-0.018838</td>
+      <td>0.027191</td>
+      <td>-0.011037</td>
+      <td>-0.045462</td>
+    </tr>
+    <tr>
+      <th>282</th>
+      <td>-0.016949</td>
+      <td>-0.036095</td>
+      <td>0.011113</td>
+      <td>0.036461</td>
+      <td>0.006870</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>0.021119</td>
+      <td>-0.015406</td>
+      <td>0.022726</td>
+      <td>-0.026684</td>
+      <td>-0.038413</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>-0.019754</td>
+      <td>-0.017589</td>
+      <td>-0.032476</td>
+      <td>0.005692</td>
+      <td>0.021819</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>0.003642</td>
+      <td>0.002257</td>
+      <td>-0.024044</td>
+      <td>-0.007047</td>
+      <td>-0.015069</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YTEST</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">:]</span>
+<span class="n">YTEST</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Retornos_stock5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>281</th>
+      <td>0.024342</td>
+    </tr>
+    <tr>
+      <th>282</th>
+      <td>0.088382</td>
+    </tr>
+    <tr>
+      <th>283</th>
+      <td>0.036439</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>0.012437</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>-0.047000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ridge1</span><span class="o">=</span><span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ridge1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">XTRAIN</span><span class="p">,</span> <span class="n">YTRAIN</span><span class="p">)</span>
+<span class="n">y_pred_ridge</span> <span class="o">=</span> <span class="n">ridge1</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">XTEST</span><span class="p">)</span>
+<span class="n">r2_ridge</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">YTEST</span><span class="p">,</span> <span class="n">y_pred_ridge</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r2_ridge</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-0.18289956470704993
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -1804,7 +2336,7 @@ p-value: 0.794826
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda">ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-datos-eda"><strong>ANÁLISIS EXPLORATORIO DE LOS DATOS (EDA)</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exploracion-de-la-muestra">Exploración de la muestra</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-datos-faltantes">Verificación de datos faltantes</a></li>
 </ul>
@@ -1814,7 +2346,7 @@ p-value: 0.794826
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-tendencia-y-estacionariedad">Serie de tiempo: Tendencia y estacionariedad</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos">ANÁLISIS EXPLORATORIO DE LOS RETORNOS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-los-retornos"><strong>ANÁLISIS EXPLORATORIO DE LOS RETORNOS</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serie-de-tiempo-y-su-retorno-mensual-compuesto">Serie de tiempo y su retorno mensual compuesto</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagrama-de-cajas">Diagrama de cajas</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histograma">Histograma</a></li>
@@ -1827,8 +2359,12 @@ p-value: 0.794826
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlaciones-dinamicas-stock5-y-stock6">Correlaciones dinámicas: Stock5 y Stock6</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision">DECISIÓN</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelamiento">MODELAMIENTO</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decision"><strong>DECISIÓN</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelamiento"><strong>MODELAMIENTO</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regresion-ridge"><strong>Regresión Ridge</strong>:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion">Implementación</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
